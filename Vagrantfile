@@ -4,9 +4,11 @@ ENV["TERM"]="linux"
 # set minimum version for Vagrant
 Vagrant.require_version ">= 2.2.10"
 Vagrant.configure("2") do |config|
-  config.vm.provision "shell",
-    inline: "sudo su - && zypper update && zypper install -y apparmor-parser"
-  
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo su - && zypper update && zypper install -y apparmor-parser
+    curl -sfL https://get.k3s.io | sh -
+  SHELL
+
   # Set the image for the vagrant box
   config.vm.box = "opensuse/Leap-15.2.x86_64"
   # Set the image version
@@ -20,7 +22,7 @@ Vagrant.configure("2") do |config|
 
   # Set the static IP for the vagrant box
   config.vm.network "private_network", ip: "192.168.50.4"
-  
+
   # Configure the parameters for VirtualBox provider
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
