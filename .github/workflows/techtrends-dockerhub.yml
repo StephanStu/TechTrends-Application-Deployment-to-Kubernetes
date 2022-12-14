@@ -28,4 +28,4 @@ jobs:
           context: .
           file: ./project/Dockerfile
           push: true
-          tags: tags: stephanstu/techtrends:latest, stephanstu/techtrends:v1.0.0
+          tags: tags: stephanstu/techtrends:latest, stephanstu/techtrends:v1.0.1
