@@ -1,5 +1,4 @@
 FROM python:3.8
-# command to add a label
 LABEL maintainer="StephanStu"
 # command to create the working directory in container
 WORKDIR /usr/src/techtrends
