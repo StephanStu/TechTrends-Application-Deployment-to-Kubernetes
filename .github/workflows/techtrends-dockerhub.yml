@@ -25,7 +25,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
-          file: ./project/Dockerfile
+          context: ./project
+          file: ./Dockerfile
           push: true
           tags: stephanstu/techtrends:latest, stephanstu/techtrends:v1.0.1
