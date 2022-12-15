@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
   labels:
-    app: techtrends
+  app: techtrends
+  tag:
   name: techtrends
   namespace: sandbox
 spec:
