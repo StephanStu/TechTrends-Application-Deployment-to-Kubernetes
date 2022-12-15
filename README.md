@@ -7,6 +7,12 @@ The status of the image is [![Health of the Image](https://github.com/StephanStu
 
 ## Local Deployment with Docker
 
+## Configuration of a Continuous Integration Pipeline with GitHub Actions
+
+## Boostrapping a Kubernetes Cluster with k3s
+
+## Configuration of a Continuous Deployment Pipeline with ArgoCD
+
 ## Resources provided by Udacity:
 **Course Homepage**: https://sites.google.com/udacity.com/suse-cloud-native-foundations/home
 
