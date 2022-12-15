@@ -3,7 +3,7 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 # Include logging package
-import logging
+import logging, sys
 # Include date + time package
 from datetime import datetime
 
@@ -38,6 +38,16 @@ def get_post_count():
     connection.close()
     return count
 
+# Function to generate handlers for logging
+def create_logging_handlers():
+    # set logger to handle STDOUT and STDERR
+    stdout_handler =  logging.StreamHandler(stream=sys.stdout) # stdout handler `
+    stderr_handler =  logging.StreamHandler(stream=sys.stderr) # stderr handler
+    file_handler = logging.FileHandler(filename='app.log')
+    handlers = [stderr_handler, stdout_handler, file_handler]
+    return handlers
+
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -57,7 +67,7 @@ def post(post_id):
     post = get_post(post_id)
     if post is None:
         # Log accessing non-existing arcticles here
-        app.logger.debug('A non-existing article is accessed and a 404 page is returned!')
+        app.logger.error('A non-existing article is accessed and a 404 page is returned!')
         return render_template('404.html'), 404
     else:
         # Log accessing existing arcticles here
@@ -119,7 +129,8 @@ def get_metrics():
 
 # start the application on port 3111
 if __name__ == "__main__":
-    # Stream logs to a file
-    logging.basicConfig(format='%(levelname)s:%(name)s:%(asctime)s, %(message)s', filename='app.log', level=logging.DEBUG)
+    # Initialize the logging
+    format_output = '%(levelname)s:%(name)s:%(asctime)s, %(message)s'
+    logging.basicConfig(format=format_output, level=logging.DEBUG, handlers=create_logging_handlers())
     # Starts the application on host:port
     app.run(host='0.0.0.0', port='3111')
