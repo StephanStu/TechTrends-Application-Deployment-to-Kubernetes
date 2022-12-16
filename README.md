@@ -98,7 +98,44 @@ GitHub Actions is used as a tool for continuous integration: Every commit to the
 
 The current status of the image is [![Health of the Image](https://github.com/StephanStu/TechTrends-Application-Deployment-to-Kubernetes/actions/workflows/techtrends-dockerhub.yml/badge.svg)](https://github.com/StephanStu/TechTrends-Application-Deployment-to-Kubernetes/actions/workflows/techtrends-dockerhub.yml)
 
-## Boostrapping a Kubernetes Cluster with k3s
+## Bootstrapping a Kubernetes Cluster with k3s
+In this project, a Kubernetes Cluster is bootstrapped on a locally hosted virtual machine. The machine is created using Vagrant. Clone this repository, cd into the directory and create the virtual machine by running
+
+```console
+vagrant up
+```
+
+The Kubernetes Cluster is deployed as part of the machine-bring up. In the Vagrantfile that instructs Vagrant in the machine-creation process, find these lines, that deploy the Kubernetes Cluster
+
+```console
+curl -sfL https://get.k3s.io | sh -
+```
+
+Once the virtual machine is created *ssh-into* it by
+
+```console
+vagrant ssh
+```
+
+Then deploy the application by creating the files contained in the folder
+
+kubernetes
+
+Then deploy the application by running
+
+```console
+kubectl apply -f namespace.yaml
+kubectl apply -f deploy.yaml
+kubectl apply -f service.yaml
+```
+
+Note: The virtual machine can be terminated and removed from the host by
+
+```console
+vagrant destroy
+```
+
+This may save some disc space.
 
 ## Configuration of a Continuous Deployment Pipeline with ArgoCD
 
