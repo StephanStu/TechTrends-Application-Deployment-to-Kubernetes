@@ -99,7 +99,7 @@ GitHub Actions is used as a tool for continuous integration: Every commit to the
 The current status of the image is [![Health of the Image](https://github.com/StephanStu/TechTrends-Application-Deployment-to-Kubernetes/actions/workflows/techtrends-dockerhub.yml/badge.svg)](https://github.com/StephanStu/TechTrends-Application-Deployment-to-Kubernetes/actions/workflows/techtrends-dockerhub.yml)
 
 ## Bootstrapping a Kubernetes Cluster with k3s
-In this project, a Kubernetes Cluster is bootstrapped on a locally hosted virtual machine. The machine is created using Vagrant. Clone this repository, cd into the directory and create the virtual machine by running
+In this project, a Kubernetes Cluster is bootstrapped on a [locally](https://www.virtualbox.org/wiki/Downloads) hosted virtual machine. The machine is created using [Vagrant](https://developer.hashicorp.com/vagrant/downloads). Clone this repository, cd into the directory and create the virtual machine by running
 
 ```console
 vagrant up
