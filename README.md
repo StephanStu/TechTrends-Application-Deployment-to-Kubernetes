@@ -73,6 +73,23 @@ app.logger.debug('Health request successful!')
 The application now logs different events to STDERR, STDOUT and the file *app.log*.
 
 ## Local Deployment with Docker
+The application can be launched and tested locally with [Docker](https://docs.docker.com/get-docker/). Instructions to run the application are kept in the file
+
+docker_commands
+
+Note, that the following command allows to identify running containers
+
+```console
+docker ps
+```
+
+The container-id used in the file might be different, so this line will not work on another host than mine
+
+```console
+docker exec -it c2c2ec878416 /bin/bash
+```
+
+The command above allows one to *ssh-into* the container.
 
 ## Configuration of a Continuous Integration Pipeline with GitHub Actions
 GitHub Actions is used as a tool for continuous integration: Every commit to the master branch of this repository triggers a build of the Docker Container Image and push to my [Dockerhub repository](https://hub.docker.com/repository/docker/stephanstu/techtrends). The workflow configuration can be found in
