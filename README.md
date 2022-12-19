@@ -51,7 +51,7 @@ The following handlers post logging information to STDERR and STDOUT:
 stdout_handler = logging.StreamHandler(stream=sys.stdout) # stdout handler `
 stderr_handler = logging.StreamHandler(stream=sys.stderr) # stderr handler
 ```
-The following handler post logging information to a file:
+The following handler posts logging information to a file:
 
 ```python
 file_handler = logging.FileHandler(filename='app.log')
@@ -138,6 +138,71 @@ vagrant destroy
 This may save some disc space.
 
 ## Configuration of a Continuous Deployment Pipeline with ArgoCD
+Following the instructions given at [here](https://argo-cd.readthedocs.io/en/stable/getting_started/#1-install-argo-cd), ArgoCD is deployed in the Kubernetes Cluster by running  
+
+```console
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+Once the ArgoCD-Containers have reached the running state (in the argocd-namespace!), the password for accessing the Continuous Deployment-UI is catched by
+
+```console
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```
+
+Before running this command, a port for accessing ArgoCd has to be exposed - an instance of a NodePort-Service needs to be created. To do so, create a file called 'argocd-server-nodeport.yaml' and fill it with these lines
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/part-of: argocd
+  name: argocd-server-nodeport
+  namespace: argocd
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30007
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30008
+  selector:
+    app.kubernetes.io/name: argocd-server
+  sessionAffinity: None
+  type: NodePort
+```
+
+Then, in the same directory run
+
+```console
+kubectl apply -f argocd-server-nodeport.yaml
+```
+
+Now access ArgoCD at http://192.168.50.4:30007 - Ip-Address as defined in the Vagrantfile and port oas defined in the NodePort-Service-Manifest given above.
+
+To deploy an application using ArgoCD, run
+
+```console
+kubectl apply -f helm-techtrends-prod.yaml
+```
+
+or
+
+```console
+kubectl apply -f helm-techtrends-staging.yaml
+```
+
+Both custom resource definitions (CRD's) will deploy the applications with a set of replicas and resources in the cluster.
 
 ## Resources provided by Udacity:
 This project was rated *passed* on 10-December-2022 by Udacity. The following resources have been provided initially:
