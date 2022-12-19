@@ -151,7 +151,7 @@ Once the ArgoCD-Containers have reached the running state (in the argocd-namespa
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
-Before running this command, a port for accessing ArgoCd has to be exposed - an instance of a NodePort-Service needs to be created. To do so, create a file called 'argocd-server-nodeport.yaml' and fill it with these lines
+Before running this command, a port for accessing ArgoCD has to be exposed - an instance of a NodePort-Service needs to be created. To do so, create a file called 'argocd-server-nodeport.yaml' and fill it with these lines
 
 ```yaml
 apiVersion: v1
@@ -188,9 +188,7 @@ Then, in the same directory run
 kubectl apply -f argocd-server-nodeport.yaml
 ```
 
-Now access ArgoCD at http://192.168.50.4:30007 - Ip-Address as defined in the Vagrantfile and port oas defined in the NodePort-Service-Manifest given above.
-
-To deploy an application using ArgoCD, run
+Now access ArgoCD at http://192.168.50.4:30007 - here the IP-Address is as defined in the Vagrantfile and the port is as defined in the NodePort-Service-Manifest given above. To deploy an application using ArgoCD, run
 
 ```console
 kubectl apply -f helm-techtrends-prod.yaml
@@ -202,7 +200,7 @@ or
 kubectl apply -f helm-techtrends-staging.yaml
 ```
 
-Both custom resource definitions (CRD's) will deploy the applications with a set of replicas and resources in the cluster.
+Both custom resource definitions (CRD's) will deploy the application with a set of replicas and resources in the cluster. ArgoCD will accept the Helm-Chart and will fill the templates with values kept in the 'values-files' (see the 'helm'-directory).
 
 ## Resources provided by Udacity:
 This project was rated *passed* on 10-December-2022 by Udacity. The following resources have been provided initially:
